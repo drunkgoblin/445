@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>drinks</title>  
+		<script>
+			function selectIngredient(select) { 
+				var option = select.options[select.selectedIndex]; 
+				var ul = select.parentNode.getElementsByTagName('ul')[0]; 
+				var choices = ul.getElementsByTagName('input'); 
+				for (var i = 0; i < choices.length; i++) if (choices[i].value == option.value) return;
+				var li = document.createElement('li');
+				li.setAttribute('style','green');
+				var input = document.createElement('input');
+				var text = document.createTextNode(option.firstChild.data); 
+				input.type = 'hidden'; 
+				input.name = 'ingredients[]'; 
+				input.value = option.value; 
+				li.appendChild(input); 
+				li.appendChild(text); 
+				li.setAttribute('onclick', 'this.parentNode.removeChild(this);'); 
+				ul.appendChild(li); 
+			}
+		</script>
+	</head>
+	<body>
+        <div id="container"">  
+			<form name="input" action="demo_form_action.asp" method="get">
+				Username: <input type="text" name="user">
+				<input type="submit" value="Submit">
+			</form> 
+        </div>    
+		<ul> 
+		</ul> 
+		Click a selection to remove it.<br></br>
+		<button type="button">Add To Bar</button><br></br>
+		<select onchange="selectIngredient(this);"> 
+			<option selected=""></option>
+			<option value="Vodka">Vodka</option> 
+			<option value="Rum">Rum</option> 
+			<option value="Sadness">Sadness</option> 
+		</select>
+    </body>
+</html>
