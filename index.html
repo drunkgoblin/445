@@ -8,7 +8,6 @@
 		<script type="text/javascript">
 		var UNAME;
 		var USERID;
-		//var RESPONSE;
 		</script>
 		<script type="text/javascript">
 		function populate() {	    
@@ -39,6 +38,9 @@
 			},"JSON");
 		}
 		function maketable(info) {
+			$.post('getrec.php',{'userid':USERID},function(data) {
+				makerecs(data);
+			},"JSON");
 		    var myTable= "<table><tr><td style='width: 80px; color: green;'>Alcohol</td>";
 			myTable+= "<td style='width: 80px; color: green; text-align: center;'>Amount</td>";
 			myTable+="<td style='width: 80px; color: green; text-align: center;'>Units</td></tr>";
@@ -49,12 +51,21 @@
 
 			for (var i=0; i<info.length; i++) {
 				myTable+="<tr><td style='width: 80px;'>" + info[i].alcoholName + "</td>";
-				//myArray[i] = myArray[i].toFixed(3);
 				myTable+="<td style='width: 80px; text-align: center;'>" + info[i].botQuantity + "</td>";
 				myTable+="<td style='width: 80px; text-align: center;'>" + info[i].botUnit + "</td></tr>";
 			}  
 			myTable+="</table>";
 			document.getElementById('bar').innerHTML += myTable;
+		}
+		function makerecs(list) {
+		document.getElementById('recipes').innerHTML = "";
+			for (var i =0; i < list.length; i++) {
+				document.getElementById('recipes').innerHTML += "<center>"+list[i].drinkName+"</center> ";
+				document.getElementById('recipes').innerHTML += "<p>Category: "+list[i].category+"</p>";
+				document.getElementById('recipes').innerHTML += "Main Alcohol: "+list[i].mainAlcohol;
+				document.getElementById('recipes').innerHTML += "<p>"+list[i].description+"</p>";
+				document.getElementById('recipes').innerHTML += "";
+			}
 		}
         </script>
 		<script type="text/javascript">
@@ -64,13 +75,15 @@
 				var choices = ul.getElementsByTagName('input'); 
 				for (var i = 0; i < choices.length; i++) if (choices[i].value == option.value) return;
 				var li = document.createElement('li');
-				li.setAttribute('style','green');
 				var input = document.createElement('input');
+				var input2 = document.createElement('input2');
 				var text = document.createTextNode(option.firstChild.data); 
+				input2.type = 'text';
 				input.type = 'hidden'; 
 				input.name = 'ingredients[]'; 
 				input.value = option.value; 
 				li.appendChild(input); 
+				li.appendChild(input2);
 				li.appendChild(text); 
 				li.setAttribute('onclick', 'this.parentNode.removeChild(this);'); 
 				ul.appendChild(li); 
@@ -121,7 +134,7 @@
 		
 		</div>
 		<div id="recipes" style="position:absolute;left:820px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
-		<p id="recP"></p>
+			
 		</div>
         <div id="login" style="position:absolute;left:470px;top:100px;width:340px;height:30px;font-size: 12pt">  
 		Username: <input id="username" type="text" name="username">
