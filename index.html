@@ -6,6 +6,7 @@
 		<title>drinks</title> 
 		<script type="text/javascript" src="./jquery.js"></script>
 		<script type="text/javascript">
+		var uname;
 		function populate() {	    
 			$.getJSON('/alcohol.php', function(data) {
 				var select = $('#alcohol');
@@ -16,6 +17,18 @@
 			});
 		}	 
 			window.onload = populate;
+		function logins() {
+			uname = document.getElementById('username').value;
+			var response = -1;
+			if (uname === "" || uname === null) {
+			alert("Please fill out the username.");
+			} else {
+			$.post('login.php',{'username':uname},function(data) {
+				response = data;
+			},JSON);
+			alert(response);
+			}
+		}
         </script>
 		<script type="text/javascript">
 			function selectIngredient(select) { 
@@ -78,14 +91,13 @@
 		}
 		</style>
 		<div id="bar" style="position:absolute;left:500px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
+		<p id="recP"></p>
 		</div>
 		<div id="recipes" style="position:absolute;left:820px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
 		</div>
         <div id="login" style="position:absolute;left:470px;top:100px;width:340px;height:30px;font-size: 12pt">  
-			<form name="login" action="" method="get">
-				Username: <input type="text" name="user">
-				<input type="submit" value="Submit">
-			</form> 
+		Username: <input id="username" type="text" name="username">
+		<button onclick="logins()" type="button">Submit</button> 
         </div>
 		<div id="barchooser" style="position:absolute;left:180px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
 		<ul> 
