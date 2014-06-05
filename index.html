@@ -9,14 +9,10 @@
 		function populate() {	    
 			$.getJSON('/alcohol.php', function(data) {
 				var select = $('#alcohol');
-				var options = select.prop('options');
-				//$('option', select).remove(); 
+				var options = select.prop('options'); 
 				for (var i = 0; i < data.length;i++) {
 					options[options.length] = new Option(data[i].alcoholName);
 				}
-				//$.each(data, function(index, array) {
-				//	options[options.length] = new Option(array[index]);
-				//} 
 			});
 		}	 
 			window.onload = populate;
@@ -42,12 +38,43 @@
 		</script>
 	</head>
 	<body>
-        <div id="container"">  
-			<form name="input" action="demo_form_action.asp" method="get">
+	    <style  type="text/css">
+        #bar
+		{
+		box-shadow: 10px 10px 5px #888888;
+		border:2px solid;
+		border-radius:25px;
+		}
+		#barchooser
+		{
+		box-shadow: 10px 10px 5px #888888;
+		border:2px solid;
+		border-radius:25px;		
+		}
+		#login
+		{
+		box-shadow: 10px 10px 5px #888888;
+		border:2px solid;
+		border-radius:25px;
+		}
+		#recipes
+		{
+		box-shadow: 10px 10px 5px #888888;
+		border:2px solid;
+		border-radius:25px;		
+		}
+		</style>
+		<div id="bar" style="position:absolute;left:500px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
+		</div>
+		<div id="recipes" style="position:absolute;left:800px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
+		</div>
+        <div id="login" style="position:absolute;left:470px;top:100px;width:340px;height:30px;font-size: 12pt">  
+			<form name="login" action="" method="get">
 				Username: <input type="text" name="user">
 				<input type="submit" value="Submit">
 			</form> 
-        </div>    
+        </div>
+		<div id="barchooser" style="position:absolute;left:200px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
 		<ul> 
 		</ul> 
 		Click a selection to remove it.<br></br>
@@ -58,5 +85,6 @@
 			<option value="Rum">Rum</option> 
 			<option value="Sadness">Sadness</option> 
 		</select>
+		</div>
     </body>
 </html>
