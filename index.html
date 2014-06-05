@@ -3,8 +3,25 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>drinks</title>  
-		<script>
+		<title>drinks</title> 
+		<script type="text/javascript" src="./jquery.js"></script>
+		<script type="text/javascript">
+		function populate() {	    
+			$.getJSON('/alcohol.php', function(data) {
+				var select = $('#alcohol');
+				var options = select.prop('options');
+				//$('option', select).remove(); 
+				for (var i = 0; i < data.length;i++) {
+					options[options.length] = new Option(data[i].alcoholName);
+				}
+				//$.each(data, function(index, array) {
+				//	options[options.length] = new Option(array[index]);
+				//} 
+			});
+		}	 
+			window.onload = populate;
+        </script>
+		<script type="text/javascript">
 			function selectIngredient(select) { 
 				var option = select.options[select.selectedIndex]; 
 				var ul = select.parentNode.getElementsByTagName('ul')[0]; 
@@ -35,7 +52,7 @@
 		</ul> 
 		Click a selection to remove it.<br></br>
 		<button type="button">Add To Bar</button><br></br>
-		<select onchange="selectIngredient(this);"> 
+		<select id="alcohol" onchange="selectIngredient(this);"> 
 			<option selected=""></option>
 			<option value="Vodka">Vodka</option> 
 			<option value="Rum">Rum</option> 
