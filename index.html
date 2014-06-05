@@ -6,7 +6,11 @@
 		<title>drinks</title> 
 		<script type="text/javascript" src="./jquery.js"></script>
 		<script type="text/javascript">
-		var uname;
+		var UNAME;
+		var USERID;
+		//var RESPONSE;
+		</script>
+		<script type="text/javascript">
 		function populate() {	    
 			$.getJSON('/alcohol.php', function(data) {
 				var select = $('#alcohol');
@@ -18,16 +22,39 @@
 		}	 
 			window.onload = populate;
 		function logins() {
-			uname = document.getElementById('username').value;
-			var response = -1;
-			if (uname === "" || uname === null) {
-			alert("Please fill out the username.");
+			UNAME = document.getElementById('username').value;
+			if (UNAME === "" || UNAME === null) {
+				alert("Please fill out the username.");
 			} else {
-			$.post('login.php',{'username':uname},function(data) {
-				response = data;
-			},JSON);
-			alert(response);
+				document.getElementById('bar').innerHTML = "<center>"+UNAME+"'s bar</center> ";
+				$.post('login.php',{'username':UNAME},function(data) {
+					saveid(data.idUser);
+				},"JSON");
 			}
+		}
+		function saveid(id) {
+			USERID = id;
+			$.post('getbar.php',{'userid':USERID},function(data) {
+				maketable(data);
+			},"JSON");
+		}
+		function maketable(info) {
+		    var myTable= "<table><tr><td style='width: 80px; color: green;'>Alcohol</td>";
+			myTable+= "<td style='width: 80px; color: green; text-align: center;'>Amount</td>";
+			myTable+="<td style='width: 80px; color: green; text-align: center;'>Units</td></tr>";
+
+			myTable+="<tr><td style='width: 80px;                   '>----------</td>";
+			myTable+="<td     style='width: 80px; text-align: center;'>----------</td>";
+			myTable+="<td     style='width: 80px; text-align: center;'>-------</td></tr>";
+
+			for (var i=0; i<info.length; i++) {
+				myTable+="<tr><td style='width: 80px;'>" + info[i].alcoholName + "</td>";
+				//myArray[i] = myArray[i].toFixed(3);
+				myTable+="<td style='width: 80px; text-align: center;'>" + info[i].botQuantity + "</td>";
+				myTable+="<td style='width: 80px; text-align: center;'>" + info[i].botUnit + "</td></tr>";
+			}  
+			myTable+="</table>";
+			document.getElementById('bar').innerHTML += myTable;
 		}
         </script>
 		<script type="text/javascript">
@@ -91,9 +118,10 @@
 		}
 		</style>
 		<div id="bar" style="position:absolute;left:500px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
-		<p id="recP"></p>
+		
 		</div>
 		<div id="recipes" style="position:absolute;left:820px;top:150px;width:280px;height:400px;font-size: 12pt;overflow: scroll">
+		<p id="recP"></p>
 		</div>
         <div id="login" style="position:absolute;left:470px;top:100px;width:340px;height:30px;font-size: 12pt">  
 		Username: <input id="username" type="text" name="username">
