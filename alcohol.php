@@ -10,7 +10,7 @@ $pdo = new PDO($dsn, $dbuser, $dbpass);
 catch(PDOException $e) {
 	die("Unable to connect to database!\n");
 }
-$res = $pdo->prepare("SELECT * FROM alcohol");
+$res = $pdo->prepare("SELECT * FROM alcohol WHERE alcoholName != 'Empty'");
 $res->execute();
 
 $rows = $res->fetchAll();

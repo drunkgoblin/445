@@ -52,7 +52,7 @@ INSERT INTO Recipes VALUES
 of jagermeister, and enjoy', 'Shots and Shooters', 2), (2, 'Tropical Fix', 'Coconut Rum', 
 'Shake ingredients in a cocktail shaker with ice. Strain into glass. Let a wedge of mango 
 and lime, and a strawberry sit on a straw in the glass.', 'Cocktails', 4), (3, 'Long Island Ice Tea',
-'Voldka', 'Mix ingredients together over ice in a glass. Pour into a shaker and give one brisk shake. 
+'Vodka', 'Mix ingredients together over ice in a glass. Pour into a shaker and give one brisk shake. 
 Pour back into the glass and make sure there is a touch of fizz at the top. Garnish with lemon.',
 'Cocktails', 2), (4, 'Mojito', 'White Rum', 'Place mint leaves in bottom of glass. Add crushed ice, 
 White Rum, sugar, and lime juice, and muddle. Add soda water and garnish with mint leaves.', 'Cocktails', 1),
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `drinks`.`Alcohol` (
 ENGINE = InnoDB;
 
 INSERT INTO Alcohol VALUES
-(0, 'Empty'), (1, 'Voldka'), (2, 'White Rum'), (3, 'Dark Rum'), (4, 'Whiskey'), (5, 'Triple Sec'), 
+(0, 'Empty'), (1, 'Vodka'), (2, 'White Rum'), (3, 'Dark Rum'), (4, 'Whiskey'), (5, 'Triple Sec'), 
 (6, 'Peppermint Schnapps'), (7, 'Peach Schnapps'), (8, 'Jagermeister'),
 (9, 'Blue Curacao'), (10, 'Gin'), (11, 'Coffee Liqueur'), (12, 'Tequilla'), 
 (13, 'Coconut Rum');

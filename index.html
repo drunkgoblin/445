@@ -8,6 +8,7 @@
 		<script type="text/javascript">
 		var UNAME;
 		var USERID;
+		var option;
 		</script>
 		<script type="text/javascript">
 		function populate() {	    
@@ -60,6 +61,7 @@
 		function makerecs(list) {
 		document.getElementById('recipes').innerHTML = "";
 			for (var i =0; i < list.length; i++) {
+				
 				document.getElementById('recipes').innerHTML += "<center>"+list[i].drinkName+"</center> ";
 				document.getElementById('recipes').innerHTML += "<p>Category: "+list[i].category+"</p>";
 				document.getElementById('recipes').innerHTML += "Main Alcohol: "+list[i].mainAlcohol;
@@ -70,23 +72,39 @@
         </script>
 		<script type="text/javascript">
 			function selectIngredient(select) { 
-				var option = select.options[select.selectedIndex]; 
-				var ul = select.parentNode.getElementsByTagName('ul')[0]; 
-				var choices = ul.getElementsByTagName('input'); 
-				for (var i = 0; i < choices.length; i++) if (choices[i].value == option.value) return;
-				var li = document.createElement('li');
-				var input = document.createElement('input');
-				var input2 = document.createElement('input2');
-				var text = document.createTextNode(option.firstChild.data); 
-				input2.type = 'text';
-				input.type = 'hidden'; 
-				input.name = 'ingredients[]'; 
-				input.value = option.value; 
-				li.appendChild(input); 
-				li.appendChild(input2);
-				li.appendChild(text); 
-				li.setAttribute('onclick', 'this.parentNode.removeChild(this);'); 
-				ul.appendChild(li); 
+				option = select.options[select.selectedIndex].value; 
+				//var ul = select.parentNode.getElementsByTagName('ul')[0]; 
+				//var choices = ul.getElementsByTagName('input'); 
+				//for (var i = 0; i < choices.length; i++) if (choices[i].value == option.value) return;
+				//var li = document.createElement('li');
+				//var input = document.createElement('input');
+				//var input2 = document.createElement('input2');
+				//var text = document.createTextNode(option.firstChild.data); 
+				//input2.type = 'text';
+				//input.type = 'hidden'; 
+				//input.name = 'ingredients[]'; 
+				//input.value = option.value; 
+				//li.appendChild(input); 
+				//li.appendChild(input2);
+				//li.appendChild(text); 
+				//li.setAttribute('onclick', 'this.parentNode.removeChild(this);'); 
+				//ul.appendChild(li); 
+			}
+			function addBar() {
+				var quant = document.getElementById('quantity').value;
+				var quanttype = document.getElementById('quantityType').value;
+				alert(option);
+			if (quant === "" || quant === null) {
+				alert("Please fill out the quantity box.");
+			} else if(quanttype === "" || quanttype === null){
+				alert("Please fill out the quantity type box.");
+			}else if(option === "" || option === null){
+				alert("Please choose an alcohol.");
+			}else {
+				$.post('addbar.php',{'userid':USERID, 'alcohol':option, 'quantity':quant, 'quanttype':quanttype},function(data) {
+					
+				},"JSON");
+			}
 			}
 		</script>
 	</head>
@@ -144,13 +162,15 @@
 		<ul> 
 		</ul> 
 		Click a selection to remove it.<br></br>
-		<button type="button">Add To Bar</button><br></br>
+		<button onClick="addBar()" type="button">Add To Bar</button><br></br>
 		<select id="alcohol" onchange="selectIngredient(this);"> 
 			<option selected=""></option>
 			<option value="Vodka">Vodka</option> 
 			<option value="Rum">Rum</option> 
 			<option value="Sadness">Sadness</option> 
-		</select>
+		</select><br></br>
+		Quantity: <input id="quantity" type="text"><br></br>
+		Quantity Type: <input id="quantityType" type="text"> (liter, oz, etc)<br></br>
 		</div>
     </body>
 </html>
